@@ -5,16 +5,22 @@ import { PARTNERS_GRID_PARTNERS } from '../utils'
 
 
 const Edit: FunctionComponent<EditProps> = ({ ...props }: EditProps) => {
-	console.log(props)
 
-	// @ts-ignore
 	const partners = JSON.parse(PARTNERS_GRID_PARTNERS);
 
 	return (
 		<div className="partners-grid">
+			<div className='container'>
+				<div className='row'>
+					<div className='partner'>
 			{ partners.map((partner: PartnerType) => {
-				return ( <div>{ partner.name }</div> )
+				return ( 
+						<a href={partner.url}><img src={partner.logo} alt={partner.name} className="img"/></a>
+						)
 			}) }
+					</div>
+				</div>
+			</div>
 		</div>
 	)
 }

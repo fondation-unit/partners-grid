@@ -12,16 +12,20 @@ function get_post_partners() {
     $posts = get_posts([
         'post_type' => 'partner',
         'numberposts' => -1,
-        'orderby' => 'rand',
+        'orderby' => 'title',
+        'order' => 'ASC',
+        'post_status' => 'publish',
         'suppress_filters' => 0
     ]);
 
     foreach($posts as $post) {
         $logofield = get_field_object('logo', $post->ID);
+        $urlfield = get_field_object('url', $post->ID);
         // Create the object
         $partner = new \stdClass();
         $partner->name = $post->post_title;
         $partner->logo = $logofield['value'];
+        $partner->url = $urlfield['value'];
         // Push to the array
         array_push($partners, $partner);
     }
