@@ -28,10 +28,6 @@ function get_post_partners() {
 
     $json = json_encode($partners, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-    echo "<pre>";
-    print_r($json);
-    echo "</pre>";
-
     return $json;
 }
 
@@ -41,12 +37,6 @@ function partnersgrid_register_block() {
     $css_file = plugins_url() . PARTNERS_GRID_DIR . 'styles.css';
     wp_enqueue_style('partnersgridblock-styles', $css_file);
 
-    wp_localize_script(
-        'partnersgrid',
-        'PARTNERSGRID',
-        ['partners' => get_post_partners()]
-    );
-
     wp_register_script(
         'partnersgrid',
         plugins_url('build/index.bundle.js', __FILE__),
@@ -54,9 +44,15 @@ function partnersgrid_register_block() {
 		$asset_file['version']
     );
 
+    wp_localize_script(
+        'partnersgrid',
+        'PARTNERS_GRID',
+        ['partners' => get_post_partners()]
+    );
+
     register_block_type('partnersgrid/block', array(
         'editor_script' => 'partnersgrid'
     ));
 }
 
-add_action('enqueue_block_editor_assets', 'partnersgrid_register_block');
+add_action('init', 'partnersgrid_register_block');
