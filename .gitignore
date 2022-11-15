@@ -39,3 +39,4 @@ yarn-error.log*
 dist
 src/.DS_Store
 src/components/.DS_Store
+test.php
