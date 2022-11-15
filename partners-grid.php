@@ -7,32 +7,30 @@ Plugin Name: Partners Grid
 const PARTNERS_GRID_DIR = '/partners-grid/build/';
 
 function get_post_partners() {
-    $partnersArray = array();
+    $partners = array();
 
-    $args = array(
+    $posts = get_posts([
         'post_type' => 'partner',
         'numberposts' => -1,
         'orderby' => 'rand',
         'suppress_filters' => 0
-    );
+    ]);
 
-    $queryResults = new WP_Query($args);
+    foreach($posts as $post) {
+        $logofield = get_field_object('logo', $post->ID);
+        // Create the object
+        $partner = new \stdClass();
+        $partner->name = $post->post_title;
+        $partner->logo = $logofield['value'];
+        // Push to the array
+        array_push($partners, $partner);
+    }
 
-    if ($queryResults->have_posts()) {
-        $count = 0;
-        while ($queryResults->have_posts()) {
-            $queryResults->the_post();
-            $partnersArray[$count]['title'] = get_the_title();
-            $partnersArray[$count]['logo'] = get_field('logo');
-            $partnersArray[$count]['url'] = get_field('url');
+    $json = json_encode($partners, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 
-            $count++;
-        };
-
-        $json = json_encode($partnersArray, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    };
-
-    $json = '';
+    echo "<pre>";
+    print_r($json);
+    echo "</pre>";
 
     return $json;
 }
