@@ -17,7 +17,7 @@ function get_post_partners() {
         'post_status' => 'publish',
         'suppress_filters' => 0
     ]);
-
+    
     foreach($posts as $post) {
         $logofield = get_field_object('logo', $post->ID);
         $urlfield = get_field_object('url', $post->ID);
@@ -27,21 +27,27 @@ function get_post_partners() {
         $partner->name = $post->post_title;
         $partner->logo = $logofield['value'];
         $partner->url = $urlfield['value'];
-        $partner->reseau = isset($reseaufield['value']) ? $reseaufield['value'] : null;
+        $partner->reseau = isset($reseaufield['value']) && !empty($reseaufield['value']) ? (object) (array) array_shift($reseaufield['value']) : null;
         // Push to the array
         array_push($arrayPartners, $partner);
     }
-
+    
+    $data = $arrayPartners;
+    
     // Récupération des objets appartenant à un réseau
-    $arrayReseaux = array_filter($arrayPartners, function($var) {
-        return isset($var->reseau) ? $var : null;
-    });
-
+    function has_reseau($var) {
+        return isset($var->reseau) && !empty($var->reseau) ? $var : null;
+    }
+    
+    $arrayReseaux = array_filter($data, "has_reseau");
+    
     // Récupération des objets sans réseau
-    $arrayNotReseaux = array_filter($arrayPartners, function($var) {
-        return !isset($var->reseau) ? $var : null;
-    });
-
+    function has_not_reseau($var) {
+        return !isset($var->reseau) or empty($var->reseau) ? $var : null;
+    }
+    
+    $arrayNotReseaux = array_filter($data, "has_not_reseau");
+    
     // Récupération des noms uniques de réseaux
     $reseaux = array();
     foreach($arrayReseaux as $objectReseau) {
@@ -49,26 +55,26 @@ function get_post_partners() {
             array_push($reseaux, $objectReseau->reseau);
         }
     }
-
+    
     // Création d'un tableau contenant les réseaux avec leurs membres
     $reseauxArray = array();
-    foreach($reseaux as $name) {
+    foreach($reseaux as $reseauitem) {
         $reseau = new \stdClass();
-        $reseau->name = $name;
+        $reseau->name = $reseauitem->post_title;
+        $reseau->object = $reseauitem;
+        $reseau->logo = get_field_object('logo', $reseauitem->ID);
         $reseau->type = "reseau";
         $reseau->items = array_values(
-            array_filter($arrayReseaux, function($item) use ($reseau) {
-                return $item->reseau == $reseau->name ? $item : null;
+            array_filter($arrayReseaux, function($item) use ($reseauitem) {
+                return $item->reseau == $reseauitem ? $item : null;
             })
         );
         array_push($reseauxArray, $reseau);
     }
-
+    
     $arrayResult = array_merge($arrayNotReseaux, $reseauxArray);
-
-    $json = json_encode($arrayResult, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-
-    return $json;
+    
+    return json_encode($arrayResult, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
 
