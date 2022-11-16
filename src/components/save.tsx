@@ -4,8 +4,11 @@ import { PARTNERS_GRID_PARTNERS } from '../utils'
 
 
 const Save = () => {
+
     const partners = JSON.parse(PARTNERS_GRID_PARTNERS);
 
+	console.log("save");
+	
 	return (
 		<div className="partners-grid">
 			<div className='container'>
