@@ -7,34 +7,74 @@ Plugin Name: Partners Grid
 const PARTNERS_GRID_DIR = '/partners-grid/build/';
 
 function get_post_partners() {
-    $partnersArray = array();
+    $arrayPartners = array();
 
-    $args = array(
+    $posts = get_posts([
         'post_type' => 'partner',
         'numberposts' => -1,
-        'orderby' => 'rand',
+        'orderby' => 'title',
+        'order' => 'ASC',
+        'post_status' => 'publish',
         'suppress_filters' => 0
-    );
-
-    $queryResults = new WP_Query($args);
-
-    if ($queryResults->have_posts()) {
-        $count = 0;
-        while ($queryResults->have_posts()) {
-            $queryResults->the_post();
-            $partnersArray[$count]['title'] = get_the_title();
-            $partnersArray[$count]['logo'] = get_field('logo');
-            $partnersArray[$count]['url'] = get_field('url');
-
-            $count++;
-        };
-
-        $json = json_encode($partnersArray, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-    };
-
-    $json = '';
-
-    return $json;
+    ]);
+    
+    foreach($posts as $post) {
+        $logofield = get_field_object('logo', $post->ID);
+        $urlfield = get_field_object('url', $post->ID);
+        $reseaufield = get_field_object('reseau', $post->ID);
+        // Create the object
+        $partner = new \stdClass();
+        $partner->name = $post->post_title;
+        $partner->logo = $logofield['value'];
+        $partner->url = $urlfield['value'];
+        $partner->reseau = isset($reseaufield['value']) && !empty($reseaufield['value']) ? (object) (array) array_shift($reseaufield['value']) : null;
+        // Push to the array
+        array_push($arrayPartners, $partner);
+    }
+    
+    $data = $arrayPartners;
+    
+    // Récupération des objets appartenant à un réseau
+    function has_reseau($var) {
+        return isset($var->reseau) && !empty($var->reseau) ? $var : null;
+    }
+    
+    $arrayReseaux = array_filter($data, "has_reseau");
+    
+    // Récupération des objets sans réseau
+    function has_not_reseau($var) {
+        return !isset($var->reseau) or empty($var->reseau) ? $var : null;
+    }
+    
+    $arrayNotReseaux = array_filter($data, "has_not_reseau");
+    
+    // Récupération des noms uniques de réseaux
+    $reseaux = array();
+    foreach($arrayReseaux as $objectReseau) {
+        if (!in_array($objectReseau->reseau, $reseaux)) {
+            array_push($reseaux, $objectReseau->reseau);
+        }
+    }
+    
+    // Création d'un tableau contenant les réseaux avec leurs membres
+    $reseauxArray = array();
+    foreach($reseaux as $reseauitem) {
+        $reseau = new \stdClass();
+        $reseau->name = $reseauitem->post_title;
+        $reseau->object = $reseauitem;
+        $reseau->logo = get_field_object('logo', $reseauitem->ID);
+        $reseau->type = "reseau";
+        $reseau->items = array_values(
+            array_filter($arrayReseaux, function($item) use ($reseauitem) {
+                return $item->reseau == $reseauitem ? $item : null;
+            })
+        );
+        array_push($reseauxArray, $reseau);
+    }
+    
+    $arrayResult = array_merge($arrayNotReseaux, $reseauxArray);
+    
+    return json_encode($arrayResult, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
 
@@ -43,12 +83,6 @@ function partnersgrid_register_block() {
     $css_file = plugins_url() . PARTNERS_GRID_DIR . 'styles.css';
     wp_enqueue_style('partnersgridblock-styles', $css_file);
 
-    wp_localize_script(
-        'partnersgrid',
-        'PARTNERSGRID',
-        ['partners' => get_post_partners()]
-    );
-
     wp_register_script(
         'partnersgrid',
         plugins_url('build/index.bundle.js', __FILE__),
@@ -56,9 +90,15 @@ function partnersgrid_register_block() {
 		$asset_file['version']
     );
 
+    wp_localize_script(
+        'partnersgrid',
+        'PARTNERS_GRID',
+        ['partners' => get_post_partners()]
+    );
+
     register_block_type('partnersgrid/block', array(
         'editor_script' => 'partnersgrid'
     ));
 }
 
-add_action('enqueue_block_editor_assets', 'partnersgrid_register_block');
+add_action('init', 'partnersgrid_register_block');

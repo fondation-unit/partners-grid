@@ -1,0 +1,1 @@
+Pour passer une donnée du php vers js il faut utiliser la fonction wp_localize_script() après wp_register_script()
