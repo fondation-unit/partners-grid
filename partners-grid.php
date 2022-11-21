@@ -58,7 +58,7 @@ function get_post_partners() {
         $reseau = new \stdClass();
         $reseau->name = $reseauitem->post_title;
         $reseau->object = $reseauitem;
-        $reseau->logo = get_field_object('logo', $reseauitem->ID);
+        $reseau->logo = get_field_object('logo', $reseauitem->ID)['value'];
         $reseau->type = "reseau";
         $reseau->items = array_values(
             array_filter($arrayReseaux, function($item) use ($reseauitem) {

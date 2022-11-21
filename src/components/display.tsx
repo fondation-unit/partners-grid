@@ -1,14 +1,13 @@
-import React, { FunctionComponent } from 'react'
-import { EditProps } from '../types/Edit'
+import * as React from 'react'
 import { PartnerType } from '../types/Partner'
 import { PARTNERS_GRID_PARTNERS } from '../utils'
 
 
-const Edit: FunctionComponent<EditProps> = () => {
-	const partners = JSON.parse(PARTNERS_GRID_PARTNERS);
-
+const Display = () => {
+    const partners = JSON.parse(PARTNERS_GRID_PARTNERS); 
+	
 	return (
-		<div className="partners-grid">
+		<div id='partnersgrid-block-root' className="partners-grid">
 			<div className='container'>
 				<div className='row'>
 					<div className='partner'>
@@ -17,6 +16,8 @@ const Edit: FunctionComponent<EditProps> = () => {
 								element.type && element.type == "reseau"
 									? <div>
 										<h6>{element.name}</h6>
+                                        <img src={element.logo} alt={element.name}/>
+										{ console.log(element) }
 										{ element.items && element.items.map((item: any) => {
 											return (
 												<a href={item.url}>
@@ -38,4 +39,4 @@ const Edit: FunctionComponent<EditProps> = () => {
 	)
 }
 
-export default Edit
+export default Display
