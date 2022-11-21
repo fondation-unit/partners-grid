@@ -35,18 +35,14 @@ function get_post_partners() {
     $data = $arrayPartners;
     
     // Récupération des objets appartenant à un réseau
-    function has_reseau($var) {
+    $arrayReseaux = array_filter($data, function($var) {
         return isset($var->reseau) && !empty($var->reseau) ? $var : null;
-    }
-    
-    $arrayReseaux = array_filter($data, "has_reseau");
+    });
     
     // Récupération des objets sans réseau
-    function has_not_reseau($var) {
+    $arrayNotReseaux = array_filter($data, function($var) {
         return !isset($var->reseau) or empty($var->reseau) ? $var : null;
-    }
-    
-    $arrayNotReseaux = array_filter($data, "has_not_reseau");
+    });
     
     // Récupération des noms uniques de réseaux
     $reseaux = array();
@@ -101,4 +97,36 @@ function partnersgrid_register_block() {
     ));
 }
 
+
 add_action('init', 'partnersgrid_register_block');
+
+
+function partnersgrid_frontend_scripts() {
+    $asset_file = include(plugin_dir_path(__FILE__) . 'build/frontend.bundle.asset.php');
+    $css_file = plugins_url() . PARTNERS_GRID_DIR . 'style.css';
+    wp_enqueue_style('partnersgridblock-styles', $css_file);
+
+    $script_file = plugins_url() . PARTNERS_GRID_DIR . 'frontend.bundle.js';
+    wp_register_script(
+        'partnersgridblock-frontend',
+        $script_file,
+        $asset_file['dependencies'],
+        $asset_file['version']
+    );
+
+    wp_localize_script(
+        'partnersgridblock-frontend',
+        'PARTNERS_GRID',
+        ['partners' => get_post_partners()]
+    );
+
+    wp_enqueue_script(
+        'partnersgridblock-frontend',
+        $script_file,
+        ['wp-element'],
+        null,
+        true
+    );
+}
+
+add_action('wp_enqueue_scripts', 'partnersgrid_frontend_scripts');

@@ -9,6 +9,7 @@ const config = {
     entry: {
         index: './src/index.tsx',
         styles: './src/sass/index.scss',
+        frontend: './src/frontend.tsx'
     },
     output: {
         ...defaultConfig.output,
