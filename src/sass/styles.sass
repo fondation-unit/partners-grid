@@ -6,3 +6,20 @@
         transition: all .7s ease
         &:hover
             transform: scale(1.25)
+    
+    .reseau-img
+        max-height: 150px
+        width: auto
+        padding: 10px
+        transition: all .7s ease
+        &:hover
+            transform: scale(1.25)
+
+    .reseau
+        .reseau-img
+            &.active + .reseau-items
+                .item
+                    display: flex
+        .reseau-items
+            .item
+                display: none
