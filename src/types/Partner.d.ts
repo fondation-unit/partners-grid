@@ -1,4 +1,5 @@
 export type PartnerType = {
+    id: string
     name: string
     logo: string
     url: string

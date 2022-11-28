@@ -10,20 +10,14 @@ const Display = () => {
     const partners = JSON.parse(PARTNERS_GRID_PARTNERS)
 
 	return (
-		<div id='partnersgrid-block-root' className="partners-grid">
-			<div className='container'>
-				<div className='row'>
-					<div className='partner'>
-						{ partners.map((element: PartnerType) => {
-							return (
-								element.type && element.type == "reseau"
-									? <Reseau {...element} />
-									: <Partner {...element} />
-							)
-						}) }
-					</div>
-				</div>
-			</div>
+		<div className='partner-container'>
+			{ partners.map((element: PartnerType) => {
+				return (
+					element.type && element.type == "reseau"
+						? <Reseau {...element} />
+						: <Partner {...element} />
+				)
+			}) }
 		</div>
 	)
 }

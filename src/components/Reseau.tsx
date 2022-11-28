@@ -12,11 +12,12 @@ const Reseau = (element: PartnerType) => {
 
 	return (
         <div className="reseau">
-            <h6>{element.name}</h6>
+            <div className="reseau-title">
+                <h6>{element.name}</h6>
+            </div>
             <img 
                 src={element.logo} 
-                alt={element.name} 
-                onClick={() => activateElement(element.name)} 
+                alt={element.name}
                 className={ active === element.name ? `reseau-img active` : `reseau-img` } 
             />
             <div className="reseau-items">

@@ -24,6 +24,7 @@ function get_post_partners() {
         $reseaufield = get_field_object('reseau', $post->ID);
         // Create the object
         $partner = new \stdClass();
+        $partner->id = $post->ID;
         $partner->name = $post->post_title;
         $partner->logo = $logofield['value'];
         $partner->url = $urlfield['value'];
@@ -56,6 +57,7 @@ function get_post_partners() {
     $reseauxArray = array();
     foreach($reseaux as $reseauitem) {
         $reseau = new \stdClass();
+        $reseau->id = $reseauitem->ID;
         $reseau->name = $reseauitem->post_title;
         $reseau->object = $reseauitem;
         $reseau->logo = get_field_object('logo', $reseauitem->ID)['value'];
