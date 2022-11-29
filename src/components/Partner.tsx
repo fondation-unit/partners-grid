@@ -11,7 +11,7 @@ const Partner = (element: PartnerType) => {
     
 	return (
         <div onClick={ () => activateInfo(element.id) }
-            className={ showInfo === element.id ? `partner-img active` : `partner-img` } >
+            className={ showInfo === element.id ? `partner-img active-info` : `partner-img` } >
             <img src={element.logo} alt={element.name} className='card__image' />
             <div className='card__overlay'>
                 <div className='card__header'></div>

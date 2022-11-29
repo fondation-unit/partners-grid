@@ -1,25 +1,29 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Partner from './Partner'
+import Icon from './IconPlus'
 import { PartnerType } from '../types/Partner'
 
 
 const Reseau = (element: PartnerType) => {
-	const [active, setActive] = useState<string>('')
+	const [active, setActive] = useState<any>({})
 
-	const activateElement = (name: string) => {
-		setActive(active == name ? '' : name)
+    useEffect(() => {
+        activateElement(element)
+    }, [])
+
+	const activateElement = (element: PartnerType) => {
+		setActive(active.name == element.name ? element : {})
 	}
 
 	return (
         <div className="reseau">
-            <div className="reseau-title">
-                <h6>{element.name}</h6>
-            </div>
             <img 
                 src={element.logo} 
                 alt={element.name}
-                className={ active === element.name ? `reseau-img active` : `reseau-img` } 
+                onClick={ () => setActive(element === active ? {} : element) }
+                className={ active === element.name ? `reseau-img active-reseau` : `reseau-img` } 
             />
+            <Icon element={element} setActiveElement={setActive} active={active} />
             <div className="reseau-items">
                 { element.items && element.items.map((item: any) => {
                     return <Partner {...item} />
