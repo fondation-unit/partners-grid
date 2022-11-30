@@ -1,17 +1,11 @@
-import React, { useState } from 'react'
-import { PartnerType } from '../types/Partner'
+import * as React from 'react'
+import { ReseauProps } from '../types/Reseau'
 
 
-const Partner = (element: PartnerType) => {
-    const [showInfo, setShowInfo] = useState<string>('')
-    
-	const activateInfo = (id: string) => {
-		setShowInfo(showInfo === id ? '' : id)
-	}
-    
+const Partner = ({element, setActiveId, activeId}: ReseauProps) => {
 	return (
-        <div onClick={ () => activateInfo(element.id) }
-            className={ showInfo === element.id ? `partner-img active-info` : `partner-img` } >
+        <div onClick={ () => setActiveId(element.id) }
+            className={ activeId === parseInt(element.id) ? `partner-img active-info` : `partner-img` } >
             <img src={element.logo} alt={element.name} className='card__image' />
             <div className='card__overlay'>
                 <div className='card__header'></div>

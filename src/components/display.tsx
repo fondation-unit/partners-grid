@@ -5,7 +5,6 @@ import { PartnerType } from '../types/Partner'
 import { PARTNERS_GRID_PARTNERS } from '../utils'
 
 
-
 const Display = () => {
 	const [activeId, setActiveId] = useState<number>(0)
     const partners = JSON.parse(PARTNERS_GRID_PARTNERS)
@@ -16,7 +15,7 @@ const Display = () => {
 				return (
 					element.type && element.type == "reseau"
 						? <Reseau element={element} activeId={activeId} setActiveId={setActiveId} />
-						: <Partner {...element} />
+						: <Partner element={element} activeId={activeId} setActiveId={setActiveId} />
 				)
 			}) }
 		</div>

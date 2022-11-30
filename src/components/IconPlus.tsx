@@ -1,13 +1,8 @@
 import * as React from 'react'
-import { PartnerType } from '../types/Partner'
+import { ReseauProps } from '../types/Reseau'
 
-interface Props {
-    element: PartnerType
-    setActiveId: (name: any) => void
-    activeId: number
-}
 
-const IconPlus = ({element, setActiveId, activeId}: Props) => {
+const IconPlus = ({element, setActiveId, activeId}: ReseauProps) => {
     return (
         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" 
             onClick={ () => setActiveId(element.id) }
