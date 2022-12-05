@@ -9,70 +9,50 @@
             display: flex
             justify-content: center
             align-items: center
-            width: calc(25% - 2*10px)
-            margin: 10px
+            width: 25%
             height: 250px
-            &.active-info
-                .card__overlay
-                    visibility: visible
-                    transform: translateY(70%)
             .card__image
+                max-height: 150px
+                opacity: 0.7
                 width: auto
-                max-width: 100%
+                max-width: 280px
                 transition: all .3s ease-in-out
                 &:hover
+                    opacity: 1
                     cursor: pointer
                     transform: scale(1.2)
-            .card__overlay
-                padding: 0px 10px 10px 10px
-                color: white
-                visibility: hidden
-                position: absolute
-                bottom: 0
-                left: 0
-                right: 0
-                z-index: 1   
-                background-color: rgba(0,0,0,0.75)
-                    .card__header:
-                        position: relative
-                        display: flex
-                        align-items: center
-                        gap: 2em
-                        padding: 2em
-                        background-color: grey
-                        transition: .2s ease-in-out
-                        .card__title: 
-                            font-size: 1em
-                            margin: 0 0 .3em
-                            color: #6A515E
 
         .reseau
-            position: relative
-            flex-direction: column
             display: flex
+            flex-direction: column
             justify-content: center
             align-items: center
-            width: calc(25% - 2*10px)
-            margin: 10px
+            width: 25%
             height: 250px
             .reseau-img
+                max-height: 150px
+                opacity: 0.7
                 width: auto
-                max-width: 100%
+                max-width: 200px
                 transition: all .3s ease-in-out
                 &:hover
+                    opacity: 1
                     cursor: pointer
                     transform: scale(1.2)
                     + .icon-plus
                         cursor: pointer
                         transform: scale(1.2)
                 &.active-reseau
+                    opacity: 1
+                    transform: scale(1.2)
                     ~ .reseau-items
                         display: flex
             .icon-plus
+                z-index: 1
+                margin-left: 100px 
+                padding-bottom: 120px
                 width: 20px
                 position: absolute
-                top: 50px
-                right: 0
                 transition: all .3s ease-in-out
                 &:hover
                     cursor: pointer
@@ -80,11 +60,21 @@
                 &.icon-active-reseau
                     display: none
                     ~ .reseau-items
+                        position: absolute
+                        background-color: white
+                        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
                         display: flex
+                        flex-wrap: wrap
+                        left: 0
+                        right: 0
+                        z-index: 1
+                        margin: 450px 50px 0 50px
+                        > .partner-img
+                            height: 150px
+                            .card__image
+                                max-height: 100px !important
             .reseau-items
                 display: none
-                z-index: 1
-                width: 1000px
 
 @media screen and (max-width: 1000px)
     .partner-img

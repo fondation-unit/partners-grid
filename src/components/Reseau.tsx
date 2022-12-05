@@ -23,7 +23,9 @@ const Reseau = ({element, setActiveId, activeId}: ReseauProps) => {
             { activeId === elementId ?
                 <div className="reseau-items">
                     { element.items && element.items.map((item: any) => {
-                        return <Partner element={item} activeId={activeId} setActiveId={setActiveId}  />
+                        return (
+                            <Partner element={item} activeId={activeId} setActiveId={setActiveId}  />
+                        )
                     }) }
                 </div>
             : null }
