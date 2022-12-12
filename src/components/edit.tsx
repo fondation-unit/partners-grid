@@ -4,11 +4,8 @@ import { PartnerType } from '../types/Partner'
 import { PARTNERS_GRID_PARTNERS } from '../utils'
 
 
-const Edit: FunctionComponent<EditProps> = ({ ...props }: EditProps) => {
-
+const Edit: FunctionComponent<EditProps> = () => {
 	const partners = JSON.parse(PARTNERS_GRID_PARTNERS);
-
-	console.log(props);
 
 	return (
 		<div className="partners-grid">
@@ -20,7 +17,6 @@ const Edit: FunctionComponent<EditProps> = ({ ...props }: EditProps) => {
 								element.type && element.type == "reseau"
 									? <div>
 										<h6>{element.name}</h6>
-										{ console.log(element.items) }
 										{ element.items && element.items.map((item: any) => {
 											return (
 												<a href={item.url}>

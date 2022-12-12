@@ -1,8 +1,109 @@
-.partners-grid
-    .img
-        max-height: 150px
-        width: auto
-        padding: 10px
-        transition: all .7s ease
-        &:hover
-            transform: scale(1.25)
+#partnersgrid-block-root
+    .partner-container
+        display: flex
+        flex-wrap: wrap
+
+        .partner-img
+            position: relative
+            flex-direction: column
+            display: flex
+            justify-content: center
+            align-items: center
+            width: 25%
+            height: 250px
+            .card__image
+                max-height: 150px
+                opacity: 0.7
+                width: auto
+                max-width: 280px
+                transition: all .3s ease-in-out
+                &:hover
+                    opacity: 1
+                    cursor: pointer
+                    transform: scale(1.2)
+
+        .reseau
+            display: flex
+            flex-direction: column
+            justify-content: center
+            align-items: center
+            width: 25%
+            height: 250px
+            .reseau-img
+                max-height: 150px
+                opacity: 0.7
+                width: auto
+                max-width: 200px
+                transition: all .3s ease-in-out
+                &:hover
+                    opacity: 1
+                    cursor: pointer
+                    transform: scale(1.2)
+                    + .icon-plus
+                        cursor: pointer
+                        transform: scale(1.2)
+                &.active-reseau
+                    opacity: 1
+                    transform: scale(1.2)
+                    ~ .reseau-items
+                        display: flex
+            .icon-plus
+                z-index: 1
+                margin-left: 100px 
+                padding-bottom: 120px
+                width: 20px
+                position: absolute
+                transition: all .3s ease-in-out
+                &:hover
+                    cursor: pointer
+                    transform: scale(1.2)
+                &.icon-active-reseau
+                    display: none
+                    ~ .reseau-items
+                        position: absolute
+                        background-color: white
+                        box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
+                        display: flex
+                        flex-wrap: wrap
+                        left: 0
+                        right: 0
+                        z-index: 1
+                        margin: 450px 50px 0 50px
+                        > .partner-img
+                            height: 150px
+                            .card__image
+                                max-width: 200px
+            .reseau-items
+                display: none
+
+
+@media screen and (max-width: 1400px)
+    .partner-img
+        width: calc(33%) !important
+        .card__image
+            max-width: 200px !important
+    .reseau
+        width: 33% !important
+        .reseau-img
+            max-width: 200px !important
+        .card__image
+            max-width: 200px !important
+
+@media screen and (max-width: 800px)
+    .partner-img
+        width: calc(50%) !important
+    .reseau
+        width: 50% !important
+
+@media screen and (max-width: 500px)
+    .partner-img
+        width: calc(100%) !important
+        height: 180px !important
+    .reseau
+        width: 100% !important
+        height: 180px !important
+
+@media screen and (max-width: 380px)
+    .reseau
+        .card__image
+            max-width: 150px !important      
