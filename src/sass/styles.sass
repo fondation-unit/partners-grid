@@ -72,10 +72,38 @@
                         > .partner-img
                             height: 150px
                             .card__image
-                                max-height: 100px !important
+                                max-width: 200px
             .reseau-items
                 display: none
 
-@media screen and (max-width: 1000px)
+
+@media screen and (max-width: 1400px)
     .partner-img
-        width: calc(33% - 2*10px) !important                 
+        width: calc(33%) !important
+        .card__image
+            max-width: 200px !important
+    .reseau
+        width: 33% !important
+        .reseau-img
+            max-width: 200px !important
+        .card__image
+            max-width: 200px !important
+
+@media screen and (max-width: 800px)
+    .partner-img
+        width: calc(50%) !important
+    .reseau
+        width: 50% !important
+
+@media screen and (max-width: 500px)
+    .partner-img
+        width: calc(100%) !important
+        height: 180px !important
+    .reseau
+        width: 100% !important
+        height: 180px !important
+
+@media screen and (max-width: 380px)
+    .reseau
+        .card__image
+            max-width: 150px !important      
