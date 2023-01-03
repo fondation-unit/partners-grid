@@ -9,13 +9,13 @@
             display: flex
             justify-content: center
             align-items: center
-            width: 25%
-            height: 250px
+            width: 16.66%
+            height: 200px
             .card__image
                 max-height: 150px
                 opacity: 0.7
                 width: auto
-                max-width: 280px
+                max-width: 180px
                 transition: all .3s ease-in-out
                 &:hover
                     opacity: 1
@@ -27,13 +27,13 @@
             flex-direction: column
             justify-content: center
             align-items: center
-            width: 25%
-            height: 250px
+            width: 16.66%
+            height: 200px
             .reseau-img
                 max-height: 150px
                 opacity: 0.7
                 width: auto
-                max-width: 200px
+                max-width: 150px
                 transition: all .3s ease-in-out
                 &:hover
                     opacity: 1
@@ -60,6 +60,7 @@
                 &.icon-active-reseau
                     display: none
                     ~ .reseau-items
+                        max-width: max-content
                         position: absolute
                         background-color: white
                         box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2)
@@ -68,42 +69,69 @@
                         left: 0
                         right: 0
                         z-index: 1
-                        margin: 450px 50px 0 50px
+                        margin: 350px auto 0 auto
                         > .partner-img
+                            width: auto
                             height: 150px
+                            padding: 0 25px 0 25px
                             .card__image
-                                max-width: 200px
+                                max-width: 150px
             .reseau-items
                 display: none
 
 
 @media screen and (max-width: 1400px)
     .partner-img
-        width: calc(33%) !important
+        width: calc(20%) !important
         .card__image
-            max-width: 200px !important
+            max-width: 150px !important
+    .reseau
+        width: 20% !important
+        .reseau-img
+            max-width: 150px !important
+        .reseau-items
+            margin: 450px auto 0 auto !important
+            .card__image
+                max-width: 150px !important
+
+@media screen and (max-width: 992px)
+    .partner-img
+        width: calc(25%) !important
+    .reseau
+        width: 25% !important
+        .reseau-items
+            margin: 450px auto 0 auto !important
+
+@media screen and (max-width: 780px)
+    .partner-img
+        width: calc(33%) !important
+        height: 180px !important
     .reseau
         width: 33% !important
-        .reseau-img
-            max-width: 200px !important
-        .card__image
-            max-width: 200px !important
+        height: 180px !important
+        .reseau-items
+            margin: 500px auto 0 auto !important
 
-@media screen and (max-width: 800px)
+@media screen and (max-width: 550px)
     .partner-img
         width: calc(50%) !important
+        height: 180px !important
     .reseau
         width: 50% !important
+        height: 180px !important
+        .reseau-items
+            margin: 500px auto 0 auto !important
+            .partner-img
+                width: 50% !important
+                .card__image
+                    max-width: 100px !important      
 
-@media screen and (max-width: 500px)
+@media screen and (max-width: 380px)
     .partner-img
         width: calc(100%) !important
         height: 180px !important
     .reseau
         width: 100% !important
         height: 180px !important
-
-@media screen and (max-width: 380px)
-    .reseau
-        .card__image
-            max-width: 150px !important      
+        .reseau-items
+            margin: 500px auto 0 auto !important
