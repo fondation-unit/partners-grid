@@ -70,7 +70,7 @@ function get_post_partners() {
         array_push($reseauxArray, $reseau);
     }
     
-    $arrayResult = array_merge($arrayNotReseaux, $reseauxArray);
+    $arrayResult = array_merge($reseauxArray, $arrayNotReseaux);
     
     return json_encode($arrayResult, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
