@@ -13,12 +13,10 @@
             height: 200px
             .card__image
                 max-height: 150px
-                opacity: 0.7
                 width: auto
                 max-width: 180px
                 transition: all .3s ease-in-out
                 &:hover
-                    opacity: 1
                     cursor: pointer
                     transform: scale(1.2)
 
@@ -31,25 +29,22 @@
             height: 200px
             .reseau-img
                 max-height: 150px
-                opacity: 0.7
                 width: auto
                 max-width: 150px
                 transition: all .3s ease-in-out
                 &:hover
-                    opacity: 1
                     cursor: pointer
                     transform: scale(1.2)
                     + .icon-plus
                         cursor: pointer
                         transform: scale(1.2)
                 &.active-reseau
-                    opacity: 1
                     transform: scale(1.2)
                     ~ .reseau-items
                         display: flex
             .icon-plus
                 z-index: 1
-                margin-left: 100px 
+                margin-left: 100px
                 padding-bottom: 120px
                 width: 20px
                 position: absolute
@@ -78,7 +73,6 @@
                                 max-width: 150px
             .reseau-items
                 display: none
-
 
 @media screen and (max-width: 1400px)
     .partner-img
@@ -124,7 +118,7 @@
             .partner-img
                 width: 50% !important
                 .card__image
-                    max-width: 100px !important      
+                    max-width: 100px !important
 
 @media screen and (max-width: 380px)
     .partner-img
