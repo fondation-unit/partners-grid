@@ -1,8 +1,18 @@
 <?php
 
-/*
-Plugin Name: Partners Grid
-*/
+/**
+ * Plugin Name: Partners Grid
+ *
+ * @author            Caroline Beachet, Pierre Duverneix
+ * @copyright         2023 Fondation UNIT
+ * @license           GPL-2.0-or-later
+ * Plugin URI:        https://github.com/fondation-unit/oer-search-bar
+ * Description:       Wordpress block displaying an a grid of partners logos based on CPT UI custom post type.
+ * Version:           1.0.0
+ * Text Domain:       partnersgrid
+ *
+ * @package           partnersgrid
+ */
 
 const PARTNERS_GRID_DIR = '/partners-grid/build/';
 
