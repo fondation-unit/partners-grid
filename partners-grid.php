@@ -98,6 +98,7 @@ function partnersgrid_register_block() {
 		$asset_file['version']
     );
 
+    // Pass data to the Javascript part
     wp_localize_script(
         'partnersgrid',
         'PARTNERS_GRID',
