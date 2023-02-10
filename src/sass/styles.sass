@@ -1,3 +1,7 @@
+$image-container-height: 150px
+$image-height: 100px
+$image-max-width: 150px
+
 #partnersgrid-block-root
     .partner-container
         display: flex
@@ -10,11 +14,11 @@
             justify-content: center
             align-items: center
             width: 16.66%
-            height: 200px
+            height: $image-container-height
             .card__image
-                max-height: 150px
+                max-height: $image-height
                 width: auto
-                max-width: 180px
+                max-width: $image-max-width
                 transition: all .3s ease-in-out
                 &:hover
                     cursor: pointer
@@ -26,11 +30,11 @@
             justify-content: center
             align-items: center
             width: 16.66%
-            height: 200px
+            height: $image-container-height
             .reseau-img
-                max-height: 150px
+                max-height: $image-height
                 width: auto
-                max-width: 150px
+                max-width: $image-max-width
                 transition: all .3s ease-in-out
                 &:hover
                     cursor: pointer
@@ -44,7 +48,7 @@
                         display: flex
             .icon-plus
                 position: absolute
-                z-index: 1
+                z-index: 0
                 margin-left: 140px
                 margin-bottom: 120px
                 width: 24px
@@ -128,10 +132,25 @@
 
 @media screen and (max-width: 380px)
     .partner-img
-        width: calc(100%) !important
-        height: 180px !important
+        width: calc(100% / 3) !important
+        height: 80px !important
+        padding: 7px
+        a
+            display: inline-block !important
+            width: 100% !important
+            .card__image
+                max-height: 80px !important
+                display: inline-block !important
+                width: 100% !important
     .reseau
-        width: 100% !important
-        height: 180px !important
+        width: calc(100% / 3) !important
+        height: 80px !important
+        padding: 7px
+        .reseau-img
+            max-height: 80px !important
+            display: inline-block !important
+            width: 100% !important
         .reseau-items
-            margin: 500px auto 0 auto !important
+            display: none
+        .icon-plus
+            display: none
