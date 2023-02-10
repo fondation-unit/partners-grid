@@ -7,17 +7,17 @@ import { PARTNERS_GRID_PARTNERS } from '../utils'
 
 const Display = () => {
 	const [activeId, setActiveId] = useState<number>(0)
-    const partners = JSON.parse(PARTNERS_GRID_PARTNERS)
- 
+	const partners = JSON.parse(PARTNERS_GRID_PARTNERS)
+
 	return (
-		<div className='partner-container'>
-			{ partners.map((element: PartnerType) => {
+		<div className='partner-container container'>
+			{partners.map((element: PartnerType) => {
 				return (
 					element.type && element.type == "reseau"
 						? <Reseau element={element} activeId={activeId} setActiveId={setActiveId} />
 						: <Partner element={element} activeId={activeId} setActiveId={setActiveId} />
 				)
-			}) }
+			})}
 		</div>
 	)
 }
