@@ -2,7 +2,8 @@ import React, { FunctionComponent } from 'react'
 import { EditProps } from '../types/Edit'
 import { PartnerType } from '../types/Partner'
 import { PARTNERS_GRID_PARTNERS } from '../utils'
-
+import {InspectorControls} from '@wordpress/block-editor';
+import {TextControl, PanelBody} from '@wordpress/components';
 
 const Edit: FunctionComponent<EditProps> = () => {
 	const partners = JSON.parse(PARTNERS_GRID_PARTNERS);

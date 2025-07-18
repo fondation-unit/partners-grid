@@ -4,5 +4,5 @@ export type EditProps = {
 }
 
 type Attributes = {
-    content: string | any
+    content: string | any,
 }

@@ -10,14 +10,14 @@
  * Description:       Wordpress block displaying an a grid of partners logos based on CPT UI custom post type.
  * Version:           1.0.0
  * Text Domain:       partnersgrid
- *
  * @package           partnersgrid
  */
 
 const PARTNERS_GRID_DIR = '/partners-grid/build/';
 
-function get_post_partners() {
-    $arrayPartners = array();
+function get_post_partners()
+{
+    $arrayPartners = [];
 
     $posts = get_posts([
         'post_type' => 'partner',
@@ -25,10 +25,10 @@ function get_post_partners() {
         'orderby' => 'title',
         'order' => 'ASC',
         'post_status' => 'publish',
-        'suppress_filters' => 0
+        'suppress_filters' => 0,
     ]);
-    
-    foreach($posts as $post) {
+
+    foreach ($posts as $post) {
         $logofield = get_field_object('logo', $post->ID);
         $urlfield = get_field_object('url', $post->ID);
         $reseaufield = get_field_object('reseau', $post->ID);
@@ -38,34 +38,35 @@ function get_post_partners() {
         $partner->name = $post->post_title;
         $partner->logo = $logofield['value'];
         $partner->url = $urlfield['value'];
-        $partner->reseau = isset($reseaufield['value']) && !empty($reseaufield['value']) ? (object) (array) array_shift($reseaufield['value']) : null;
+        $partner->reseau = isset($reseaufield['value']) && ! empty($reseaufield['value'])
+            ? (object) (array) array_shift($reseaufield['value']) : null;
         // Push to the array
         array_push($arrayPartners, $partner);
     }
-    
+
     $data = $arrayPartners;
-    
+
     // Récupération des objets appartenant à un réseau
-    $arrayReseaux = array_filter($data, function($var) {
-        return isset($var->reseau) && !empty($var->reseau) ? $var : null;
+    $arrayReseaux = array_filter($data, function ($var) {
+        return isset($var->reseau) && ! empty($var->reseau) ? $var : null;
     });
-    
+
     // Récupération des objets sans réseau
-    $arrayNotReseaux = array_filter($data, function($var) {
-        return !isset($var->reseau) or empty($var->reseau) ? $var : null;
+    $arrayNotReseaux = array_filter($data, function ($var) {
+        return ! isset($var->reseau) or empty($var->reseau) ? $var : null;
     });
-    
+
     // Récupération des noms uniques de réseaux
-    $reseaux = array();
-    foreach($arrayReseaux as $objectReseau) {
-        if (!in_array($objectReseau->reseau, $reseaux)) {
+    $reseaux = [];
+    foreach ($arrayReseaux as $objectReseau) {
+        if (! in_array($objectReseau->reseau, $reseaux)) {
             array_push($reseaux, $objectReseau->reseau);
         }
     }
-    
+
     // Création d'un tableau contenant les réseaux avec leurs membres
-    $reseauxArray = array();
-    foreach($reseaux as $reseauitem) {
+    $reseauxArray = [];
+    foreach ($reseaux as $reseauitem) {
         $reseau = new \stdClass();
         $reseau->id = $reseauitem->ID;
         $reseau->name = $reseauitem->post_title;
@@ -73,20 +74,20 @@ function get_post_partners() {
         $reseau->logo = get_field_object('logo', $reseauitem->ID)['value'];
         $reseau->type = "reseau";
         $reseau->items = array_values(
-            array_filter($arrayReseaux, function($item) use ($reseauitem) {
+            array_filter($arrayReseaux, function ($item) use ($reseauitem) {
                 return $item->reseau == $reseauitem ? $item : null;
             })
         );
         array_push($reseauxArray, $reseau);
     }
-    
+
     $arrayResult = array_merge($reseauxArray, $arrayNotReseaux);
-    
+
     return json_encode($arrayResult, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
 }
 
-
-function partnersgrid_register_block() {
+function partnersgrid_register_block()
+{
     $asset_file = include(plugin_dir_path(__FILE__) . 'build/index.bundle.asset.php');
     $css_file = plugins_url() . PARTNERS_GRID_DIR . 'styles.css';
     wp_enqueue_style('partnersgridblock-styles', $css_file);
@@ -95,7 +96,7 @@ function partnersgrid_register_block() {
         'partnersgrid',
         plugins_url('build/index.bundle.js', __FILE__),
         $asset_file['dependencies'],
-		$asset_file['version']
+        $asset_file['version']
     );
 
     // Pass data to the Javascript part
@@ -105,16 +106,15 @@ function partnersgrid_register_block() {
         ['partners' => get_post_partners()]
     );
 
-    register_block_type('partnersgrid/block', array(
-        'editor_script' => 'partnersgrid'
-    ));
+    register_block_type('partnersgrid/block', [
+        'editor_script' => 'partnersgrid',
+    ]);
 }
-
 
 add_action('init', 'partnersgrid_register_block');
 
-
-function partnersgrid_frontend_scripts() {
+function partnersgrid_frontend_scripts()
+{
     $asset_file = include(plugin_dir_path(__FILE__) . 'build/frontend.bundle.asset.php');
     $css_file = plugins_url() . PARTNERS_GRID_DIR . 'style.css';
     wp_enqueue_style('partnersgridblock-styles', $css_file);

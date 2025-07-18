@@ -11,6 +11,9 @@ export default registerBlockType('partnersgrid/block-esnext', {
     attributes: {
         content: {
             type: 'array'
+        },
+        title: {
+            type: 'string'
         }
     },
     edit: (props) => <Edit {...props} />,
